@@ -1,0 +1,42 @@
+# Python-specific ignores
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.sqlite3
+
+# Django-specific ignores
+db.sqlite3
+*.log
+*.pot
+*.py[cod]
+*.coverage
+*.cover
+*.log
+*.env  # For environment variables (if using)
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.virtualenv/
+
+# PyCharm IDE
+.idea/
+
+# VSCode IDE
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*.so
+
+# MacOS files
+.DS_Store
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~

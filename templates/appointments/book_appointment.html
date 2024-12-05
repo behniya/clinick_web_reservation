@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Book Appointment with Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- This will automatically render the form fields with error messages if validation fails -->
+        
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">Book Appointment</button>
+    </form>
+</div>
+{% endblock %}

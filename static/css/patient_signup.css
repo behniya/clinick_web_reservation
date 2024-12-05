@@ -1,0 +1,106 @@
+/* Patient Sign-Up Form Styling */
+
+/* Center the form container on the page */
+.patient-signup .container {
+    margin-top: 50px;
+}
+
+/* Form container styling */
+.patient-signup .form-container {
+    max-width: 500px;
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 30px;
+    background-color: #e7f5ff; /* Soft blue background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    border: 1px solid #a1c6ea; /* Light blue border */
+}
+
+/* Header styling */
+.patient-signup .form-container h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c3e50; /* Darker text color for contrast */
+    text-align: center; /* Center the header text */
+}
+
+/* Input and form field styling */
+.patient-signup .form-container .form-group {
+    margin-bottom: 20px; /* Add space between form fields */
+    display: flex;
+    flex-direction: column; /* Ensure vertical stacking of inputs and labels */
+}
+
+/* Input fields */
+.patient-signup .form-container .form-control {
+    height: 45px; /* Increase height for better visibility */
+    padding: 10px; /* Add padding inside the input */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #a1c6ea; /* Match the container's border color */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle inset shadow */
+    margin-top: 5px; /* Add space between label and input */
+}
+
+/* Ensure proper spacing between elements */
+.patient-signup .form-container .form-control:not(:last-child) {
+    margin-bottom: 20px; /* Add bottom margin for all inputs except the last one */
+}
+
+/* Style the labels */
+.patient-signup .form-container label {
+    font-weight: bold;
+    color: #34495e; /* Slightly darker label color */
+}
+
+/* Focus state for inputs */
+.patient-signup .form-container .form-control:focus {
+    border-color: #1f78d1; /* Blue border on focus */
+    box-shadow: 0 0 5px rgba(31, 120, 209, 0.5); /* Subtle glow effect */
+    outline: none; /* Remove default outline */
+}
+
+/* Button styling */
+.patient-signup .btn-block {
+    width: 100%; /* Full width for the submit button */
+    margin-top: 20px; /* Space above the button */
+    background-color: #1f78d1; /* Blue background for the button */
+    border-color: #1c6ab3; /* Button border color */
+    color: white; /* White text color */
+    font-weight: bold;
+    font-size: 1.1rem;
+    height: 45px; /* Match input field height */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Button hover state */
+.patient-signup .btn-block:hover {
+    background-color: #155f99; /* Darker blue on hover */
+    border-color: #124e78; /* Adjust border color on hover */
+    cursor: pointer;
+}
+
+/* Error message styling */
+.patient-signup .form-container .invalid-feedback {
+    color: #d9534f; /* Red text for error messages */
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Help text styling */
+.patient-signup .form-container .help-text {
+    color: #6c757d; /* Grey for help text */
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+/* Additional container styling for responsiveness */
+@media (max-width: 768px) {
+    .patient-signup .form-container {
+        padding: 20px; /* Reduce padding on smaller screens */
+    }
+    .patient-signup .btn-block {
+        font-size: 1rem; /* Adjust button font size for smaller screens */
+    }
+}
+

@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+
+{% block title %}Home{% endblock %}
+
+{% block navbar %}
+<div class="flex gap-1">
+    {% if user.is_authenticated %}
+    <a class="nav-link text-xs lg:text-lg" href="{% url 'logout' %}"><span><i class="fa-solid fa-right-from-bracket"></i></span> Logout</a>
+    {% else %}
+    <a class="nav-link text-xs lg:text-lg" href="{% url 'doctor_signup' %}"><span><i class="fa-solid fa-user-doctor"></i></span> Sign Up as Doctor</a>
+    <a class="nav-link text-xs lg:text-lg" href="{% url 'patient_signup' %}"><span><i class="fa-solid fa-user"></i></span> Sign Up as Patient</a>
+    <a class="nav-link text-xs lg:text-lg" href="{% url 'login' %}"><span><i class="fa-solid fa-right-to-bracket"></i></span> Login</a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Find a Doctor</h2>
+        
+        <!-- Search form with dynamic results -->
+        <form method="get" class="search-form" id="search-form">
+            {% csrf_token %}
+            <input type="text" id="search-input" name="query" placeholder="Search by skill or name" class="form-control" autocomplete="off">
+        </form>
+        
+        <!-- Display search results -->
+        <h3>Search Results:</h3>
+        <ul id="doctor-results" class="list-group">
+            {% if doctors %}
+                {% for doctor in doctors %}
+                    <li class="list-group-item relative">
+                        <strong class="inline">{{ doctor.first_name }} {{ doctor.last_name }}</strong><br>
+                        <em class="inline">Specialty: {{ doctor.skills }}</em>
+                        
+                        <!-- Only show the 'book appointment' link if the user is authenticated -->
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'book_appointment' doctor.id %}" class="inline absolute right-5 top-10 transition text-2xl"><span><i class="fa fa-plus-circle"></i></span></a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="inline absolute right-5 top-10 transition text-2xl" title="Login to Book Appointment"><span><i class="fa fa-plus-circle"></i></span></a>
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No doctors found matching your search criteria.</li>
+                {% endfor %}
+            {% else %}
+                <li class="list-group-item">No search results to show.</li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    // Prevent form default behavior
+    $('#search-form').on('submit', function (event) {
+        event.preventDefault(); // Prevent form submission
+    });
+
+    // When user types in the search field
+    $('#search-input').on('input', function () {
+        let query = $(this).val(); // Get the input value
+
+        // If the search bar is empty, clear the results
+        if (query === '') {
+            $('#doctor-results').empty(); // Clear the results
+        } else {
+            $.ajax({
+                url: '{% url "search_doctors" %}', // URL to search doctors
+                data: { 'query': query }, // Pass query as GET parameter
+                success: function (data) {
+                    // Clear previous results
+                    $('#doctor-results').empty();
+
+                    // Check if there are any results
+                    if (data.doctors.length > 0) {
+                        data.doctors.forEach(function (doctor) {
+                            // Dynamically generate the URL using doctor.id
+                            let appointmentUrl = "/book_appointment/" + doctor.id + "/";
+
+                            // Append results with dynamic URL using template literals
+                            $('#doctor-results').append(
+                                `<li class="list-group-item relative">
+                                    <strong class="inline">${doctor.first_name} ${doctor.last_name}</strong><br>
+                                    <em class="inline">Specialty: ${doctor.skills}</em>
+                                    <a href="${appointmentUrl}" class="inline absolute right-5 top-10 transition text-2xl">
+                                        <span><i class="fa fa-plus-circle"></i></span>
+                                    </a>
+                                </li>`
+                            );
+                        });
+                    } else {
+                        $('#doctor-results').append('<li class="list-group-item">No doctors found matching your search criteria.</li>');
+                    }
+                }
+            });
+        }
+    });
+
+});
+</script>
+{% endblock %}
